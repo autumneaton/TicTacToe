@@ -63,11 +63,11 @@ namespace TicTacToe
             return null;
         }
 
-        // Helper method to check if all three characters are equal and not empty
-        private bool AreAllEqual(char a, char b, char c)
+        private bool AreAllEqual(string a, string b, string c)
         {
-            return a == b && b == c && a != ' ';
+            return a == b && b == c && a != " ";
         }
+
 
         // Helper method to check if the tictactoeArray is full
         private bool IsTictactoeArrayFull(string[] tictactoeArray)

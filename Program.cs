@@ -1,10 +1,10 @@
-﻿
-using TicTacToe;
+﻿using TicTacToe;
+using System;
 
 internal class Program
 {
-    Supporting TTT = new Supporting();
-    private void Main(string[] args)
+    private static Supporting TTT = new Supporting();  // Make TTT static as it's used in a static context
+    static void Main(string[] args)
     {
         bool gameOver = false;
         Console.WriteLine("Welcome to the TicTacToe Classic!");
@@ -15,70 +15,61 @@ internal class Program
         Console.WriteLine("6 7 8");
 
         string[] tictactoeArray = new string[9];
-
-        Console.WriteLine("Player 1, please pick a number from 0 to 8");
-        string player1 = Console.ReadLine();
+        for (int i = 0; i < tictactoeArray.Length; i++)
+        {
+            tictactoeArray[i] = " ";  // Initialize the game board with spaces
+        }
 
         do
         {
-            bool stringCheck = true;
-            do
-            {
-                if (player1.Length > 1)
-                {
-                    Console.WriteLine("Please input a number from 0 to 8");
-                    stringCheck = false;
-                }
-                if (Int32.Parse(player1) < 0 || Int32.Parse(player1) > 8)
-                {
-                    Console.WriteLine("Please input a number from 0 to 8");
-                    stringCheck = false;
-                }
-                else
-                {
-                    stringCheck = true;
-                }
-
-            } while (!stringCheck);
-
-            Console.WriteLine("Player 2, please pick a number from 0 to 8");
-            string player2 = Console.ReadLine();
-
-
-            do
-            {
-                if (player2.Length > 1)
-                {
-                    Console.WriteLine("Please input a number from 0 to 8");
-                    stringCheck = false;
-                }
-                if (Int32.Parse(player2) < 0 || Int32.Parse(player2) > 8)
-                {
-                    Console.WriteLine("Please input a number from 0 to 8");
-                    stringCheck = false;
-                }
-                else
-                {
-                    stringCheck = true;
-                }
-
-            } while (!stringCheck);
-
-            for (int i = 0; i < tictactoeArray.Length; i++)
-            {   
-                if (i == Int32.Parse(player1))
-                {
-                    tictactoeArray[i] = "X";
-                }
-                if (i == Int32.Parse(player2))
-                {
-                    tictactoeArray[i] = "O";
-                }
-            }
+            int playerChoice1 = GetPlayerChoice(1, tictactoeArray);  // Get choice for Player 1
+            tictactoeArray[playerChoice1] = "X";
 
             TTT.PrinttictactoeArray(tictactoeArray);
-            TTT.CheckForWinner(tictactoeArray);
 
-        } while (gameOver = false);
+            string result = TTT.CheckForWinner(tictactoeArray);
+            if (result != null)
+            {
+                Console.WriteLine(result);
+                gameOver = true;
+                break;  // Exit the loop if the game is over
+            }
+
+            int playerChoice2 = GetPlayerChoice(2, tictactoeArray);  // Get choice for Player 2
+            tictactoeArray[playerChoice2] = "O";
+
+            TTT.PrinttictactoeArray(tictactoeArray);
+
+            result = TTT.CheckForWinner(tictactoeArray);
+            if (result != null)
+            {
+                Console.WriteLine(result);
+                gameOver = true;
+                break;  // Exit the loop if the game is over
+            }
+
+        } while (!gameOver);
+    }
+
+    private static int GetPlayerChoice(int playerNumber, string[] tictactoeArray)
+    {
+        int playerChoice;
+        bool validChoice;
+        do
+        {
+            Console.WriteLine($"Player {playerNumber}, please pick a number from 0 to 8 for an empty space");
+            string input = Console.ReadLine();
+            validChoice = int.TryParse(input, out playerChoice)
+                          && playerChoice >= 0
+                          && playerChoice <= 8
+                          && tictactoeArray[playerChoice] == " ";  // Check if the cell is empty
+
+            if (!validChoice)
+            {
+                Console.WriteLine("Invalid input or cell is not empty. Please input a number from 0 to 8 for an empty space.");
+            }
+
+        } while (!validChoice);
+        return playerChoice;
     }
 }
