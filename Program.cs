@@ -1,8 +1,10 @@
-﻿using System.Runtime.InteropServices;
+﻿
+using TicTacToe;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    Supporting TTT = new Supporting();
+    private void Main(string[] args)
     {
         bool gameOver = false;
         Console.WriteLine("Welcome to the TicTacToe Classic!");
@@ -74,8 +76,8 @@ internal class Program
                 }
             }
 
-            printMethod(tictactoeArray);
-            WinnerMethod(tictactoeArray);
+            TTT.PrinttictactoeArray(tictactoeArray);
+            TTT.CheckForWinner(tictactoeArray);
 
         } while (gameOver = false);
     }

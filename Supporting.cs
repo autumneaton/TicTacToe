@@ -11,7 +11,7 @@ namespace TicTacToe
         private const int Size = 3; // The size of one side of the Tic Tac Toe board
 
         // Method to print the current state of the 1D array: tictactoeArray
-        public void PrinttictactoeArray(char[] tictactoeArray)
+        public void PrinttictactoeArray(string[] tictactoeArray)
         {
             for (int iCount = 0; iCount < tictactoeArray.Length; iCount++)
             {
@@ -30,7 +30,7 @@ namespace TicTacToe
         }
 
         // Method to determine if there is a winner or the game is a draw
-        public string CheckForWinner(char[] tictactoeArray)
+        public string CheckForWinner(string[] tictactoeArray)
         {
             // Check rows and columns for a winner
             for (int iCount = 0; iCount < Size; iCount++)
@@ -70,11 +70,11 @@ namespace TicTacToe
         }
 
         // Helper method to check if the tictactoeArray is full
-        private bool IsTictactoeArrayFull(char[] tictactoeArray)
+        private bool IsTictactoeArrayFull(string[] tictactoeArray)
         {
             for (int iCount = 0; iCount < tictactoeArray.Length; iCount++)
             {
-                if (tictactoeArray[iCount] == ' ')
+                if (tictactoeArray[iCount] == " ")
                 {
                     return false;
                 }
