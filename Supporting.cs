@@ -8,51 +8,53 @@ namespace TicTacToe
 {
     public class Supporting
     {
-        // Method to print the current state of the 2 dimmensional array: tictactoeArray
-        public void PrinttictactoeArray(char[,] tictactoeArray)
+        private const int Size = 3; // The size of one side of the Tic Tac Toe board
+
+        // Method to print the current state of the 1D array: tictactoeArray
+        public void PrinttictactoeArray(char[] tictactoeArray)
         {
-            for (int iCountOuter = 0; iCountOuter < tictactoeArray.GetLength(0); iCountOuter++)
+            for (int iCount = 0; iCount < tictactoeArray.Length; iCount++)
             {
-                for (int iCountInner = 0; iCountInner < tictactoeArray.GetLength(1); iCountInner++)
+                Console.Write(tictactoeArray[iCount]);
+                if ((iCount + 1) % Size != 0)
                 {
-                    Console.Write(tictactoeArray[iCountOuter, iCounterInner]);
-                    if (iCountInner < tictactoeArray.GetLength(1) - 1)
-                    {
-                        Console.Write(" | ");
-                    }
+                    Console.Write(" | ");
                 }
-                Console.WriteLine();
-                if (iCountOuter < tictactoeArray.GetLength(0) - 1)
+                else if (iCount < tictactoeArray.Length - 1)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("---------");
                 }
             }
+            Console.WriteLine();
         }
 
         // Method to determine if there is a winner or the game is a draw
-        public string CheckForWinner(char[,] tictactoeArray)
+        public string CheckForWinner(char[] tictactoeArray)
         {
             // Check rows and columns for a winner
-            for (int iCountOuter = 0; iCountOuter < 3; iCountOuter++)
+            for (int iCount = 0; iCount < Size; iCount++)
             {
-                if (AreAllEqual(tictactoeArray[iCountOuter, 0], tictactoeArray[iCountOuter, 1], tictactoeArray[iCountOuter, 2]))
+                // Check rows
+                if (AreAllEqual(tictactoeArray[iCount * Size], tictactoeArray[iCount * Size + 1], tictactoeArray[iCount * Size + 2]))
                 {
-                    return $"{tictactoeArray[iCountOuter, 0]} wins!";
+                    return $"{tictactoeArray[iCount * Size]} wins!";
                 }
-                if (AreAllEqual(tictactoeArray[0, iCountOuter], tictactoeArray[1, iCountOuter], tictactoeArray[2, iCountOuter]))
+                // Check columns
+                if (AreAllEqual(tictactoeArray[iCount], tictactoeArray[iCount + Size], tictactoeArray[iCount + 2 * Size]))
                 {
-                    return $"{tictactoeArray[0, iCountOuter]} wins!";
+                    return $"{tictactoeArray[iCount]} wins!";
                 }
             }
 
             // Check diagonals for a winner
-            if (AreAllEqual(tictactoeArray[0, 0], tictactoeArray[1, 1], tictactoeArray[2, 2]) || AreAllEqual(tictactoeArray[0, 2], tictactoeArray[1, 1], tictactoeArray[2, 0]))
+            if (AreAllEqual(tictactoeArray[0], tictactoeArray[4], tictactoeArray[8]) || AreAllEqual(tictactoeArray[2], tictactoeArray[4], tictactoeArray[6]))
             {
-                return $"{tictactoeArray[1, 1]} wins!";
+                return $"{tictactoeArray[4]} wins!";
             }
 
             // Check for a draw
-            if (IstictactoeArrayFull(tictactoeArray))
+            if (IsTictactoeArrayFull(tictactoeArray))
             {
                 return "It's a draw!";
             }
@@ -68,19 +70,17 @@ namespace TicTacToe
         }
 
         // Helper method to check if the tictactoeArray is full
-        private bool IstictactoeArrayFull(char[,] tictactoeArray)
+        private bool IsTictactoeArrayFull(char[] tictactoeArray)
         {
-            for (int iCountOuter = 0; iCountOuter < tictactoeArray.GetLength(0); iCountOuter++)
+            for (int iCount = 0; iCount < tictactoeArray.Length; iCount++)
             {
-                for (int iCountInner = 0; iCountInner < tictactoeArray.GetLength(1); iCountInner++)
+                if (tictactoeArray[iCount] == ' ')
                 {
-                    if (tictactoeArray[iCountOuter, iCountInner] == ' ')
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             return true;
         }
     }
+
 }
